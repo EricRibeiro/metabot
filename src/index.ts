@@ -20,5 +20,8 @@ export = (app: Probot) => {
     } else {
       throw error;
     }
+
+    console.log("Batata")
+
   });
 };
