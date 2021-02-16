@@ -12,8 +12,8 @@
     "probot-app"
   ],
   "scripts": {
-    "build": "./node_modules/.bin/tsc",
-    "start": "./node_modules/.bin/probot run ./lib/index.js",
+    "build": "tsc",
+    "start": "probot run ./lib/index.js",
     "test": "jest"
   },
   "dependencies": {
