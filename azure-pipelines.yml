@@ -75,7 +75,7 @@ stages:
               appName: $(webAppName)
               runtimeStack: 'NODE|14.15'
               package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
-              startUpCommand: 'rm -rf node_module/ && npm install && npm run build && npm run start'
+              startUpCommand: 'npm run start'
             env:
               PORT: 8080
             
