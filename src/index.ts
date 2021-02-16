@@ -21,6 +21,7 @@ export = (app: Probot) => {
       throw error;
     }
 
+    //@todo remover isso aqui eventualmente
     console.log("Batata")
 
   });

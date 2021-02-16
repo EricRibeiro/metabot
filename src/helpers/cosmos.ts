@@ -36,7 +36,8 @@ export class CosmosClient {
 
         return { document, error };
     }
-
+    
+    //@todo metodo foda esse aqui
     public async insertOne(database: string, collection: string, document: any): Promise<{ result: { ok?: number, n?: number }, error: any }> {
         const client = await this.mongoClient.connect();
         const db = client.db(database);
