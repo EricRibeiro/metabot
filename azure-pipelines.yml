@@ -75,4 +75,6 @@ stages:
               runtimeStack: 'NODE|14.15'
               package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
               startUpCommand: 'npm run start'
+            env:
+              PORT: 8080
             
