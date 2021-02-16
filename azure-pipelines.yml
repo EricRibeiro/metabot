@@ -36,6 +36,7 @@ stages:
       displayName: 'Install Node.js'
 
     - script: |
+        rm -rf node_modules/
         npm install
         npm run build --if-present
       displayName: 'npm install, build and test'
@@ -74,7 +75,7 @@ stages:
               appName: $(webAppName)
               runtimeStack: 'NODE|14.15'
               package: $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
-              startUpCommand: 'npm install -g probot && npm run start'
+              startUpCommand: 'npm run start'
             env:
               PORT: 8080
             
