@@ -1,12 +1,12 @@
 import { MongoClient } from 'mongodb'
 
 
-export class CosmosClient {
+export class Mongo {
 
     mongoClient: MongoClient;
 
     constructor(connectionString: string) {
-        this.mongoClient = new MongoClient(connectionString);
+        this.mongoClient = new MongoClient(connectionString, { useUnifiedTopology: true });
     }
 
     public async findAll(database: string, collection: string, query: any): Promise<any> {
@@ -23,7 +23,7 @@ export class CosmosClient {
         return { document, error };
     }
 
-    public async findOne(database: string, collection: string, query: any): Promise<any> {
+    public async findOne(database: string, collection: string, query: any): Promise<{ document: any, error: any }> {
         const client = await this.mongoClient.connect();
         const db = client.db(database);
 
