@@ -14,7 +14,7 @@ export = (app: Probot) => {
     const client = new CosmosClient(connString);
 
     const { result, error } = await client.insertOne("metabot", "events", payload)
-    
+
     if(!error) {
       context.log(result)
     } else {
