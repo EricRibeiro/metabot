@@ -7,7 +7,7 @@ export = (app: Probot) => {
 
   app.on("pull_request.opened", async (context) => {
     // waiting for all bots' comments to be posted, saved on database and deleted.
-    await sleep(10000);
+    await sleep(900000);
 
     const { documents, error } = await fetchBotsComments(
       context.payload.repository.owner.login,

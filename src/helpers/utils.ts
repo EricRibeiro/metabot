@@ -54,5 +54,5 @@ export function getGitHubComment(prOwner: string, documents: any): string {
   }
 
   // removing empty tab spaces to have a valid markdown.
-  return body.replace(/  /g, "")
+  return body.replace(/  /g, "");
 }
