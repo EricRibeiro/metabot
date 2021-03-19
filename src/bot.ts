@@ -42,6 +42,18 @@ function resolveLabel(botName: string): string {
             label = "info";
             break;
 
+        case "codesandbox[bot]":
+            label = "warning";
+            break;
+            
+        case "github-actions[bot]":
+            label = "info";
+            break;
+        
+        case "codecov[bot]":
+        label = "info";
+        break;
+
         default:
             label = "unlabelled";
             break;
