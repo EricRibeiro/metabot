@@ -2,7 +2,7 @@ export function sleep(milliseconds: number): Promise<null> {
   return new Promise(resolve => setTimeout(resolve, milliseconds));
 }
 
-export function getGitHubComment(prOwner: string, documents: any): string {
+export function buildGitHubComment(prOwner: string, documents: any, botsToWaitForComment: string[] = []): string {
   const commentsPerLabelCount = documents.length;
   const commentsPerLabelPerBot = {}
 
@@ -53,6 +53,42 @@ export function getGitHubComment(prOwner: string, documents: any): string {
     body += `</details>`;
   }
 
+  const botsThatHaventCommented = botsToWaitForComment.reduce((acc: string[], curr: string) => {
+    if (!documents.some(doc => doc.comment.user.login.includes(curr))) acc.push(curr);
+    return acc
+  }, [])
+
+  if (botsThatHaventCommented.length > 0) {
+    body += "\n";
+
+    let bots = botsThatHaventCommented
+      .map(curr => `<b>${curr}</b>`)
+      .join(", ");
+
+    if (botsThatHaventCommented.length > 1) {
+      bots = strReplaceLast(bots, ",", " and")
+    }
+
+    body += `⚠️ The ${botsThatHaventCommented.length > 1 ? "bots" : "bot"} ${bots} `
+    body += `${botsThatHaventCommented.length > 1 ? "are" : "is"} still doing `
+    body += `${botsThatHaventCommented.length > 1 ? "their" : "its"} thing. I'll update this comment when `
+    body += `${botsThatHaventCommented.length > 1 ? "they are" : "it is"} finished.`
+  }
+
   // removing empty tab spaces to have a valid markdown.
   return body.replace(/  /g, "");
+}
+
+// replaceLast where pattern is a string
+export function strReplaceLast(str, pattern, replacement) {
+  var i = str.lastIndexOf(pattern);
+  if (i < 0) return str;
+  return replaceAtIndex(str, pattern, replacement, i);
+}
+
+// Replace pattern by replacement at index
+function replaceAtIndex(str, pattern, replacement, i) {
+  var lhs = str.substring(0, i);
+  var rhs = str.substring(i + pattern.length, str.length);
+  return lhs + replacement + rhs;
 }

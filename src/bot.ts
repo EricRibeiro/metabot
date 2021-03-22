@@ -1,13 +1,14 @@
 import { Mongo } from 'metabot-utils'
 
 import type { EventPayloads } from "@octokit/webhooks/dist-types/generated/event-payloads"
+import type { BotsPerLabel } from "./helpers/types"
 
 export async function saveBotComment(
     owner: string, 
     repo: string, 
     issue_number: number, 
-    comment: EventPayloads.WebhookPayloadIssueCommentComment, 
-    commentSender: string,  
+    comment: EventPayloads.WebhookPayloadIssueCommentComment,
+    commentLabel: string,  
     connString: string)
     : Promise<{ result: { ok?: number, n?: number }, error: any }> {
  
@@ -16,7 +17,7 @@ export async function saveBotComment(
         owner,
         repo,
         issue_number,
-        label: resolveLabel(commentSender)
+        label: commentLabel
     }
 
     return await new Mongo(connString).insertOne("metabot", "comments", document);
@@ -30,22 +31,14 @@ export async function fetchBotsComments(owner: string, repo: string, issue_numbe
     });
 }
 
-function resolveLabel(botName: string): string {
-    let label: string;
+export function labelResolver(botsPerLabel: BotsPerLabel[], userLogin: string): string {
+    const defaultLabel = "unlabelled";
 
-    switch (botName) {
-        case "request-info[bot]":
-            label = "warning";
-            break;
+    if (botsPerLabel.length === 0) return defaultLabel;
+    const botsPerLabelWithUserLogin = botsPerLabel.filter(label => Object.values(label)[0].some(login => userLogin.includes(login)));
 
-        case "todo[bot]":
-            label = "info";
-            break;
-
-        default:
-            label = "unlabelled";
-            break;
-    }
+    if (botsPerLabelWithUserLogin.length === 0) return defaultLabel;
+    const label = Object.keys(botsPerLabelWithUserLogin[0])[0];
 
     return label;
 }

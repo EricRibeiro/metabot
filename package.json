@@ -17,6 +17,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "luxon": "^1.26.0",
     "metabot-utils": "^1.0.10",
     "mongodb": "^3.6.4",
     "probot": "^11.0.1",
@@ -24,6 +25,7 @@
   },
   "devDependencies": {
     "@types/jest": "^26.0.19",
+    "@types/luxon": "^1.26.2",
     "@types/mongodb": "^3.6.7",
     "@types/node": "^14.14.19",
     "jest": "^26.6.3",
