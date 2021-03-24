@@ -56,7 +56,7 @@ export function buildGitHubComment(prOwner: string, documents: any, botsToWaitFo
   const botsThatHaventCommented = botsToWaitForComment.reduce((acc: string[], curr: string) => {
     if (!documents.some(doc => doc.comment.user.login.includes(curr))) acc.push(curr);
     return acc
-  }, [])
+  }, []);
 
   if (botsThatHaventCommented.length > 0) {
     body += "\n";
@@ -66,13 +66,11 @@ export function buildGitHubComment(prOwner: string, documents: any, botsToWaitFo
       .join(", ");
 
     if (botsThatHaventCommented.length > 1) {
-      bots = strReplaceLast(bots, ",", " and")
+      bots = strReplaceLast(bots, ",", " and");
     }
 
-    body += `⚠️ The ${botsThatHaventCommented.length > 1 ? "bots" : "bot"} ${bots} `
-    body += `${botsThatHaventCommented.length > 1 ? "are" : "is"} still doing `
-    body += `${botsThatHaventCommented.length > 1 ? "their" : "its"} thing. I'll update this comment when `
-    body += `${botsThatHaventCommented.length > 1 ? "they are" : "it is"} finished.`
+    body += `⚠️ The ${botsThatHaventCommented.length > 1 ? "bots" : "bot"} ${bots} `;
+    body += `did not comment anything yet. I'll update this comment as soon as they do.`;
   }
 
   // removing empty tab spaces to have a valid markdown.
@@ -81,14 +79,14 @@ export function buildGitHubComment(prOwner: string, documents: any, botsToWaitFo
 
 // replaceLast where pattern is a string
 export function strReplaceLast(str, pattern, replacement) {
-  var i = str.lastIndexOf(pattern);
+  const i = str.lastIndexOf(pattern);
   if (i < 0) return str;
   return replaceAtIndex(str, pattern, replacement, i);
 }
 
 // Replace pattern by replacement at index
 function replaceAtIndex(str, pattern, replacement, i) {
-  var lhs = str.substring(0, i);
-  var rhs = str.substring(i + pattern.length, str.length);
+  const lhs = str.substring(0, i);
+  const rhs = str.substring(i + pattern.length, str.length);
   return lhs + replacement + rhs;
 }
