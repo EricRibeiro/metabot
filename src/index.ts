@@ -20,12 +20,14 @@ export = (app: Probot) => {
     );
 
     if (error) throw error;
-
-    const prOwner = context.payload.pull_request.user.login;
-    const body = buildGitHubComment(prOwner, documents, config.metabotBotsToWaitForComment);
-    const issueComment = context.issue({ body });
-
-    await context.octokit.issues.createComment(issueComment);
+    
+    if (documents) {
+      const prOwner = context.payload.pull_request.user.login;
+      const body = buildGitHubComment(prOwner, documents, config.metabotBotsToWaitForComment);
+      const issueComment = context.issue({ body });
+      
+      await context.octokit.issues.createComment(issueComment);
+    }
   });
 
   app.on("issue_comment.created", async (context) => {
