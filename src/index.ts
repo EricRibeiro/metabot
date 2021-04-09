@@ -70,7 +70,7 @@ export = (app: Probot) => {
         const body = buildGitHubComment(context.payload.repository.owner.login, documents, config.metabotBotsToWaitForComment);
 
         await context.octokit.issues.updateComment({
-          owner: context.payload.issue.user.login,
+          owner: context.payload.repository.owner.login,
           repo: context.payload.repository.name,
           comment_id: metabotComment.id,
           body
