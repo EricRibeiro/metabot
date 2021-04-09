@@ -21,7 +21,7 @@ export = (app: Probot) => {
 
     if (error) throw error;
     
-    if (documents.length === 0) {
+    if (documents.length > 0) {
       const prOwner = context.payload.pull_request.user.login;
       const body = buildGitHubComment(prOwner, documents, config.metabotBotsToWaitForComment);
       const issueComment = context.issue({ body });
