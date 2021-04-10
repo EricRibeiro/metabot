@@ -34,7 +34,7 @@ export = (app: Probot) => {
   });
 
   app.on("issue_comment.created", async (context) => {
-    if (context.isBot && context.payload.comment.user.login !== "metabot-puc[bot]") {
+    if (context.isBot && context.payload.comment.user.login !== "the-funnel-bot[bot]") {
       const config = <BotsConfig>(await context.config("config.yml"));
       const commentLabel = labelResolver(config.metabotLabels, context.payload.comment.user.login);
 
