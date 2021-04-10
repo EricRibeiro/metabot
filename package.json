@@ -17,7 +17,6 @@
     "test": "jest"
   },
   "dependencies": {
-    "luxon": "^1.26.0",
     "metabot-utils": "^1.0.10",
     "mongodb": "^3.6.4",
     "probot": "^11.0.1",
