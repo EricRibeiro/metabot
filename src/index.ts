@@ -61,7 +61,7 @@ export = (app: Probot) => {
         issue_number: context.payload.issue.number
       })
 
-      const metabotComment = comments.data.find(comment => comment.user?.login === "metabot-puc[bot]")
+      const metabotComment = comments.data.find(comment => comment.user?.login === "the-funnel-bot[bot]")
 
       const issueCreationTimeWithOffset = DateTime.fromISO(context.payload.issue.created_at)
         .plus({ milliseconds: SLEEP_TIME_MILLISECONDS });
