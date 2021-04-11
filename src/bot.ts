@@ -63,7 +63,7 @@ export function buildGitHubComment(prOwner: string, documents: any, botsToWaitFo
     let body = `\
           Hi @${prOwner}
     
-          You have ${commentsPerLabelCount} ${commentsPerLabelCount === 1 ? "comment" : "comments"}, made by bots installed on this repo, regarding this pull request. \
+          You have ${commentsPerLabelCount} ${commentsPerLabelCount === 1 ? "comment" : "comments"} made by bots installed on this repo regarding this pull request. \
           Check them below:\n`;
   
     for (const [label, commentsPerBot] of (<any>Object).entries(commentsPerLabelPerBot)) {
@@ -117,4 +117,4 @@ export function buildGitHubComment(prOwner: string, documents: any, botsToWaitFo
   
     // removing empty tab spaces to have a valid markdown.
     return body.replace(/  /g, "");
-  }
+}
