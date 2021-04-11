@@ -15,6 +15,16 @@ export = (app: Probot) => {
     await sleep(SLEEP_TIME_MILLISECONDS);
     const config = <BotsConfig>(await context.config("config.yml"));
 
+    const comments = await context.octokit.issues.listComments({
+      owner: context.payload.repository.owner.login,
+      repo: context.payload.repository.name,
+      issue_number: context.payload.number
+    })
+
+    const metabotComment = comments.data.find(comment => comment.user?.login === "the-funnel-bot[bot]");
+
+    if (metabotComment) return;
+
     const { documents, error } = await fetchBotsComments(
       context.payload.repository.owner.login,
       context.payload.repository.name,
