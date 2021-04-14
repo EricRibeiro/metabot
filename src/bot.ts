@@ -1,5 +1,5 @@
 import { Mongo } from 'metabot-utils'
-import { strReplaceLast } from "./helpers/utils"
+import { strReplaceLast, sortObjectEntries } from "./helpers/utils"
 
 import type { EventPayloads } from "@octokit/webhooks/dist-types/generated/event-payloads"
 import type { BotsPerLabel } from "./helpers/types"
@@ -46,7 +46,7 @@ export function labelResolver(botsPerLabel: BotsPerLabel[], userLogin: string): 
 
 export function buildGitHubComment(prOwner: string, documents: any, botsToWaitForComment: string[] = []): string {
     const commentsPerLabelCount = documents.length;
-    const commentsPerLabelPerBot = {}
+    let commentsPerLabelPerBot = {}
   
     documents.forEach((curr) => {
       commentsPerLabelPerBot[curr.label] = commentsPerLabelPerBot[curr.label]
@@ -59,7 +59,9 @@ export function buildGitHubComment(prOwner: string, documents: any, botsToWaitFo
   
       commentsPerLabelPerBot[curr.label][curr.comment.user.login].push(curr.comment.body);
     });
-  
+    
+    commentsPerLabelPerBot = sortObjectEntries(commentsPerLabelPerBot);
+
     let body = `\
           Hi @${prOwner}
     

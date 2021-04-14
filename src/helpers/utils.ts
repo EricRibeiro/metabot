@@ -15,3 +15,14 @@ function replaceAtIndex(str, pattern, replacement, i) {
   const rhs = str.substring(i + pattern.length, str.length);
   return lhs + replacement + rhs;
 }
+
+export function sortObjectEntries(obj) {
+  return Object.entries(obj).sort((a, b) => {
+      if (a < b) return -1;
+      if (a > b) return 1;
+      return 0;
+  }).reduce((acc, curr) => {
+      acc[curr[0]] = curr[1];
+      return acc;
+   }, {})
+}
