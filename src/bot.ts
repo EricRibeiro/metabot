@@ -75,7 +75,7 @@ export function buildGitHubComment(prOwner: string, documents: any, botsToWaitFo
   
       body += `\
               <details>
-              <summary>There ${amountOfComments === 1 ? "is" : "are"} <b>${amountOfComments}</b> ${amountOfComments === 1 ? "comment" : "comments"} classified as <b>${label}</b></summary>
+              <summary>There ${amountOfComments === 1 ? "is" : "are"} ${amountOfComments} <b>${label}</b> ${amountOfComments === 1 ? "comment" : "comments"}</summary>
               <br /> \n\n`;
   
       for (const [bot, comments] of (<any>Object).entries(commentsPerBot)) {
